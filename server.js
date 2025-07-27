@@ -3,8 +3,9 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require('cors')
 
-const authRoutes = require("./routes/auth.routes");
-const founderRoutes = require("./routes/founder.routes");
+const authRoutes = require("./routes/auth.route");
+const founderRoutes = require("./routes/founder.route");
+const userRoutes = require("./routes/user.route")
 
 dotenv.config();
 const app = express();
@@ -18,11 +19,9 @@ app.get('/',(req,res)=>{
 //api routes
 app.use("/api/auth", authRoutes);
 app.use("/api/founder", founderRoutes);
-
+app.use("/api/user",userRoutes)
 //server connection and start.
 mongoose.connect(process.env.MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
 }).then(() => {
   console.log("connected to the database");
   app.listen(5000, () => console.log("server running on port 5000"));
