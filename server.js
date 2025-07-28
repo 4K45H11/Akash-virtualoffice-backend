@@ -6,6 +6,7 @@ const cors = require('cors')
 const authRoutes = require("./routes/auth.route");
 const founderRoutes = require("./routes/founder.route");
 const userRoutes = require("./routes/user.route")
+const internRoutes = require("./routes/intern.route")
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.get('/',(req,res)=>{
 app.use("/api/auth", authRoutes);
 app.use("/api/founder", founderRoutes);
 app.use("/api/user",userRoutes)
+app.use("/api/intern", internRoutes);
 //server connection and start.
 mongoose.connect(process.env.MONGO_URI, {
 }).then(() => {
