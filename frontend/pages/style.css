@@ -1,0 +1,416 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #fdfdfd;
+  color: #fff;
+  height: 100%;
+ 
+}
+
+/* Top Bar */
+.top-bar {
+  background-color: #d78b76;
+  padding: 30px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 25px;
+  color:  #3f0303;
+  flex-wrap: wrap;
+}
+
+.top-bar span {
+  margin-right: 15px;
+}
+
+.top-bar .social-icons i {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #b76a61;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.navbar .logo img {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav-links li {
+  margin-left: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #3f0303;
+  font-weight: 500;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background: #f9f9f9;
+  border-right: 1px solid #ddd;
+  padding: 20px 10px;
+}
+
+.sidebar h3 {
+  text-align: center;
+  color: #003366;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 10px 0;
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: #333333;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.sidebar a i {
+  margin-right: 10px;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar a:hover {
+  background: #e6f0fb;
+  color: #003366;
+}
+
+
+/* Hero Section */
+.hero-section {
+  background-color: #b76a61;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 60px 40px;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.hero-content {
+  max-width: 70%;
+}
+
+/*
+.tagline {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #fbd3c1;
+}
+*/
+
+
+.hero-section h1 {
+  font-size: 50px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #3f0303;
+}
+
+.hero-section h1 span {
+  font-weight: 700;
+  color: #fff;
+}
+
+.subtitle {
+    font-size: 25px;
+  margin-bottom: 25px;
+  color: #f9eae6;
+}
+
+.buttons a {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 5px;
+  text-decoration:wavy;
+  font-weight: 600;
+  margin-right: 15px;
+  font-size: 20px;
+}
+
+.btn-primary {
+  background-color: #fff;
+  color: #b76a61;
+}
+
+.btn-outline {
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.hero-image img {
+  max-width: 400px;
+  border-radius: 50%;
+}
+
+    
+
+
+
+/* Landing Page */
+.landing-container {
+  text-align: center;
+  padding:  50px 30px;
+}
+
+.landing-container h2 {
+  font-size: 2.4rem;
+  margin-bottom: 20px;
+  color: #003366;
+  font-weight: 600;
+}
+
+.landing-container p {
+  max-width: 650px;
+  margin: 0 auto 30px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.landing-container .btn {
+  display: inline-block;
+  background: #3399cc;
+  color: white;
+  padding: 10px 10px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 10rem;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.landing-container .btn:hover {
+  background: #287fa1;
+  transform: translateY(-3px);
+}
+
+.landing-container .btn:active {
+  background: #1d617a;
+}
+
+.company-highlights {
+  background: #3f0303;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+.company-highlights h2 {
+  font-size: 2rem;
+  color: #003366;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.company-highlights p {
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: #555;
+  font-size: 1.05rem;
+}
+
+.highlights-grid {
+  display:contents;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 10px;
+  margin: 0 auto;
+}
+
+.highlight-card {
+  background: #d78b76;
+  border-radius: 10px;
+  padding: 25px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.highlight-card h3 {
+  color: #3f0303;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.highlight-card p {
+  color: #555;
+  font-size: 1.0rem;
+}
+
+.calendar-section {
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa;
+}
+
+.calendar-section h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.calendar-section h2 i {
+  color: #4a5cff;
+  margin-right: 8px;
+}
+
+.calendar {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4a5cff;
+  color: #fff;
+  padding: 15px 20px;
+}
+
+.calendar-header button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #e0e4f6;
+  text-align: center;
+  font-weight: 600;
+  padding: 10px 0;
+}
+
+.calendar-days div {
+  color: #4a5cff;
+}
+
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.calendar-dates div {
+  padding: 10px 0;
+  border-radius: 10px;
+  background: #f4f5fa;
+  color: #333;
+  transition: 0.2s;
+}
+
+.calendar-dates div:hover {
+  background: #4a5cff;
+  color: white;
+  cursor: pointer;
+}
+
+.calendar-container h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  display: flex;
+  justify-content: center; /* This centers the contents inside */
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+
+
+
+
+
+
+
+/* Footer */
+.footer {
+  background: #d78b76;
+  color:black;
+  text-align: center;
+  padding: 50px 50px;
+  margin-top: 0px;
+}
+
+.footer-content h3 {
+  font-size: 2.3rem;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: black;
+}
+
+.footer-content p {
+  font-size: 1.5rem;
+  margin: 3px 0;
+}
+
+.footer-content a {
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.footer-content a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
