@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Intern Dashboard</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; }
+    .card { background: white; padding: 20px; margin: auto; max-width: 400px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Intern Progress Dashboard</h2>
+    <p id="info">Loading progress...</p>
+  </div>
+
+  <script>
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(atob(token.split('.')[1]));
+
+    async function loadProgress() {
+      const res = await fetch(`http://localhost:5000/api/hr/interns/progress/${user.email}`, {
+        headers: {
+          Authorization: "Bearer " + token
+        }
+      });
+
+      const data = await res.json();
+      document.getElementById("info").innerText = `Your current progress: ${data.progress}%`;
+    }
+
+    loadProgress();
+  </script>
+</body>
+</html>
