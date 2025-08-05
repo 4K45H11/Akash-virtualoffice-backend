@@ -1,35 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Intern Dashboard</title>
   <style>
-    body { font-family: Arial; text-align: center; margin-top: 50px; }
-    .card { background: white; padding: 20px; margin: auto; max-width: 400px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e6f2ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: white;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 800px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #007acc;
+      margin-bottom: 10px;
+    }
+
+    #info {
+      font-size: 16px;
+      margin-bottom: 25px;
+      color: #444;
+    }
+
+    h3 {
+      color: #005f99;
+      margin-bottom: 15px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th,
+    td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #cce6ff;
+      color: #003d66;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2faff;
+    }
+
+    tr:hover {
+      background-color: #d9f0ff;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    @media (max-width: 600px) {
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      thead {
+        display: none;
+      }
+
+      td {
+        position: relative;
+        padding-left: 50%;
+      }
+
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 12px;
+        font-weight: bold;
+        color: #005f99;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h2>Intern Progress Dashboard</h2>
     <p id="info">Loading progress...</p>
+    <h3>Your Assigned Tasks</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="taskTable"></tbody>
+    </table>
   </div>
 
   <script>
     const token = localStorage.getItem("token");
     const user = JSON.parse(atob(token.split('.')[1]));
 
-    async function loadProgress() {
-      const res = await fetch(`http://localhost:5000/api/hr/interns/progress/${user.email}`, {
-        headers: {
-          Authorization: "Bearer " + token
-        }
-      });
+    console.log(token)
 
-      const data = await res.json();
-      document.getElementById("info").innerText = `Your current progress: ${data.progress}%`;
+    async function loadProgress() {
+      try {
+        const res = await fetch(`http://localhost:5000/api/hr/interns/progress/${user.email}`, {
+          headers: {
+            Authorization: "Bearer " + token
+          }
+        });
+        const data = await res.json();
+        document.getElementById("info").innerText = `Your current progress: ${data.progress}%`;
+      } catch (err) {
+        document.getElementById("info").innerText = "Unable to fetch progress.";
+      }
+    }
+
+    async function loadTasks() {
+      try {
+        const res = await fetch("http://localhost:5000/api/tasks", {
+          headers: { Authorization: "Bearer " + token }
+        });
+        const tasks = await res.json();
+        const taskTable = document.getElementById("taskTable");
+        taskTable.innerHTML = "";
+        tasks.forEach(t => {
+          taskTable.innerHTML += `
+            <tr>
+              <td data-label="Title">${t.title}</td>
+              <td data-label="Description">${t.description}</td>
+              <td data-label="Status">${t.status}</td>
+            </tr>`;
+        });
+      } catch (err) {
+        document.getElementById("taskTable").innerHTML = `<tr><td colspan="3">Unable to load tasks</td></tr>`;
+      }
     }
 
     loadProgress();
+    loadTasks();
   </script>
 </body>
+
 </html>

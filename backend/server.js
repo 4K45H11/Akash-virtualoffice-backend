@@ -5,6 +5,7 @@ require('dotenv').config()
 
 const authRoutes = require('./routes/auth.router');
 const hrRoutes = require('./routes/hr.router')
+const taskRoutes = require('./routes/task.route')
 
 const app = express();
 app.use(express.json());
@@ -16,6 +17,7 @@ app.get('/',(req,res)=>{
 
 app.use('/api/auth', authRoutes);
 app.use('/api/hr', hrRoutes);
+app.use('/api/tasks', taskRoutes);
 
 mongoose.connect(process.env.MONGO_URL)
 .then(() => {

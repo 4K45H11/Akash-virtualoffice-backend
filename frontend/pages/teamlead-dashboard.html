@@ -232,7 +232,7 @@
       const assignedTo = document.getElementById("assignedTo").value;
 
       try {
-        const res = await fetch("http://localhost:5000/api/teamlead/tasks", {
+        const res = await fetch("http://localhost:5000/api/tasks", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
