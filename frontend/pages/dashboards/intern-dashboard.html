@@ -14,10 +14,50 @@
       background: #e6f2ff;
       margin: 0;
       padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
+    }
+
+    .top-bar {
+      background-color: #b3e5fc;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo span {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #004d66;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links li {
+      margin: 0;
+    }
+
+    .nav-links li button {
+      padding: 0.5rem 1rem;
+      background-color: #4fc3f7;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: background 0.3s;
+    }
+
+    .nav-links li button:hover {
+      background-color: #0288d1;
     }
 
     .card {
@@ -27,6 +67,7 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       width: 90%;
       max-width: 800px;
+      margin: 2rem auto;
       text-align: center;
     }
 
@@ -74,6 +115,12 @@
     }
 
     @media (max-width: 600px) {
+      .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
       table,
       thead,
       tbody,
@@ -105,6 +152,15 @@
 </head>
 
 <body>
+  <div class="top-bar">
+    <div class="logo">
+      <span>Virtual Office of <b>HairCoaction</b></span>
+    </div>
+    <ul class="nav-links">
+      <li><button id="logoutBtn">Logout</button></li>
+    </ul>
+  </div>
+
   <div class="card">
     <h2>Intern Progress Dashboard</h2>
     <p id="info">Loading progress...</p>
@@ -124,8 +180,6 @@
   <script>
     const token = localStorage.getItem("token");
     const user = JSON.parse(atob(token.split('.')[1]));
-
-    console.log(token)
 
     async function loadProgress() {
       try {
@@ -164,6 +218,17 @@
 
     loadProgress();
     loadTasks();
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      localStorage.clear(); // Clear session
+      window.location.href = "../auth/login.html"; // Redirect to login
+    });
+
+    // Prevent navigating back to dashboard using back button
+    window.history.pushState(null, "", window.location.href);
+    window.onpopstate = function () {
+      window.history.pushState(null, "", window.location.href);
+    };
   </script>
 </body>
 

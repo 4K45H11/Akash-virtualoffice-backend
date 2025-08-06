@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Chat | Virtual Office</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* === GENERAL RESET === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f0f2f5;
+      color: #333;
+    }
+
+    /* === NAVBAR === */
+    .navbar {
+      background-color: #4b0082;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .navbar h1 {
+      font-size: 24px;
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+
+    .navbar a:hover,
+    .navbar .active {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* === CHAT CONTAINER === */
+    .chat-container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === MESSAGES AREA === */
+    .chat-messages {
+      padding: 25px;
+      height: 480px;
+      overflow-y: auto;
+      background: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      max-width: 75%;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease-in;
+    }
+
+    .message strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #4b0082;
+    }
+
+    .message:nth-child(even) {
+      background: #e1ecf7;
+      align-self: flex-start;
+    }
+
+    .message:nth-child(odd) {
+      background: #d2f2e9;
+      align-self: flex-end;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === CHAT INPUT === */
+    .chat-input {
+      border-top: 1px solid #ddd;
+      padding: 18px;
+      background-color: #f9fafc;
+      display: flex;
+      gap: 10px;
+    }
+
+    .chat-input input {
+      flex: 1;
+      padding: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border 0.3s ease;
+    }
+
+    .chat-input input:focus {
+      outline: none;
+      border-color: #4b0082;
+    }
+
+    .chat-input button {
+      background: #4b0082;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .chat-input button:hover {
+      background: #360064;
+    }
+
+    /* === SCROLLBAR === */
+    .chat-messages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: #bbb;
+      border-radius: 4px;
+    }
+
+    .chat-messages::-webkit-scrollbar-track {
+      background: transparent;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <h1>Virtual Office</h1>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="chat.html" class="active">Chat</a></li>
+    </ul>
+  </nav>
+
+  <div class="chat-container">
+    <div class="chat-messages">
+      <div class="message"><strong>Aditi:</strong> Hey team, any updates on today's deployment?</div>
+      <div class="message"><strong>Rohan:</strong> Almost done, testing final APIs.</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" placeholder="Type your message..." />
+      <button>Send</button>
+    </div>
+  </div>
+  <script>
+    const input = document.querySelector('.chat-input input');
+    const button = document.querySelector('.chat-input button');
+    const messages = document.querySelector('.chat-messages');
+
+    // Helper to create a message bubble
+    function appendMessage(sender, text, alignRight = true) {
+      const div = document.createElement('div');
+      div.classList.add('message');
+      div.innerHTML = `<strong>${sender}:</strong> ${text}`;
+
+      // Optional: alternate bubble alignment
+      if (alignRight) {
+        div.style.alignSelf = 'flex-end';
+        div.style.background = '#d2f2e9';
+      } else {
+        div.style.alignSelf = 'flex-start';
+        div.style.background = '#e1ecf7';
+      }
+
+      messages.appendChild(div);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    // Event listener for button click
+    button.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (text !== '') {
+        appendMessage('You', text);
+        input.value = '';
+      }
+    });
+
+    // Send on Enter key
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        button.click();
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -13,7 +13,7 @@
       <input type="password" id="loginPassword" placeholder="Password" required />
       <button type="submit">Login</button>
     </form>
-    <p>Don't have an account? <a href="register.html">Register here</a></p>
+    <p>Don't have an account? <a href="./register.html">Register here</a></p>
   </div>
 
   <script>
@@ -40,7 +40,7 @@
           localStorage.setItem('userEmail', email);
 
           // Redirect to central dashboard
-          window.location.href = 'dashboard.html';
+          window.location.href = '../dashboards/dashboard.html';
         } else {
           alert(data.msg || 'Login failed');
         }
