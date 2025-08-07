@@ -64,7 +64,18 @@
     .nav-links button:hover {
       background-color: #0277bd;
     }
+     .nav-links li a {
+      padding: 0.5rem 1rem;
+      background-color: #4fc3f7;
+      color: white;
+      border-radius: 5px;
+      transition: background 0.3s;
+      text-decoration: none;
+    }
 
+    .nav-links li a:hover {
+      background-color: #0288d1;
+    }
     .container {
       max-width: 900px;
       margin: 30px auto;
@@ -183,15 +194,21 @@
     <div class="logo">
       <span>Virtual Office of <b>HairCoaction</b></span>
     </div>
-    <ul class="nav-links">
-      <li><button id="logoutBtn">Logout</button></li>
+   <ul class="nav-links">
+      <li><a class="nav-links "href="../features/meet.html">Meetings</a></li>
+      <li><a class="nav-links" href="../calender/calendar.html">Calendar</a></li>
+      <li><a class="nav-links" href="../features/fileupload.html">Files</a></li>
+      <li><a class="nav-links" href="../attendence/attendence.html">Attendence</a></li>
+      <li><a class="nav-links" href="../features/chat.html">Communication</a></li>
+      <li><button id="logoutBtn">Logout</button>
+      </li>
     </ul>
   </div>
 
   <div class="container">
     <h2>Team Lead Dashboard</h2>
     <p id="greeting">Welcome, Team Lead!</p>
-
+    
     <h3>Assign Task</h3>
     <form id="taskForm">
       <input type="text" id="assignedTo" placeholder="Teammate Email" required />

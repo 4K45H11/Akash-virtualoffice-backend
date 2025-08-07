@@ -6,6 +6,40 @@ body {
   color: #333;
 }
 
+.navbar {
+  background-color: #2196f3;
+  color: white;
+  padding: 0px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  font-size: 24px;
+  color: white;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar .active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 .container {
   max-width: 1000px;
   margin: 40px auto;
@@ -15,7 +49,8 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
+h1,
+h2 {
   color: #4a5cff;
   margin-bottom: 20px;
   text-align: center;
@@ -57,7 +92,8 @@ table {
   margin-top: 20px;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ccc;
   text-align: center;
   vertical-align: middle;

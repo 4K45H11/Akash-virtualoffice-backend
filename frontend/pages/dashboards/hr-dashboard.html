@@ -138,6 +138,7 @@
       color: white;
       border-radius: 5px;
       transition: background 0.3s;
+      text-decoration: none;
     }
 
     .nav-links li a:hover {
@@ -152,6 +153,11 @@
       <span>Virtual Office of <b>HairCoaction</b></span>
     </div>
     <ul class="nav-links">
+      <li><a class="nav-links " href="../features/meet.html">Meetings</a></li>
+      <li><a class="nav-links" href="../calender/calendar.html">Calendar</a></li>
+      <li><a class="nav-links" href="../features/fileupload.html">Files</a></li>
+      <li><a class="nav-links" href="../attendence/attendence.html">Attendence</a></li>
+      <li><a class="nav-links" href="../features/chat.html">Communication</a></li>
       <li><button id="logoutBtn">Logout</button>
       </li>
     </ul>
@@ -159,6 +165,8 @@
   <div style="margin-top: 2rem;" class="container">
     <h2>HR Dashboard – Manage Interns</h2>
 
+    <p id="greeting">Welcome, HR!</p>
+    <br>
     <form id="internForm">
       <input type="text" id="name" placeholder="Intern Name" required />
       <input type="email" id="email" placeholder="Intern Email" required />
@@ -185,6 +193,10 @@
   <script>
     const token = localStorage.getItem("token");
     if (!token) window.location.href = "index.html";
+
+    const userName = localStorage.getItem("userName") || "Intern";
+
+    document.getElementById('greeting').innerText = `Welcome, ${userName}`
 
     const form = document.getElementById("internForm");
     const tableBody = document.querySelector("#internTable tbody");
