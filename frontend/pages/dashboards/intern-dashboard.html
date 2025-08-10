@@ -59,7 +59,8 @@
     .nav-links li button:hover {
       background-color: #0288d1;
     }
-     .nav-links li a {
+
+    .nav-links li a {
       padding: 0.5rem 1rem;
       background-color: #4fc3f7;
       color: white;
@@ -168,14 +169,13 @@
     <div class="logo">
       <span>Virtual Office of <b>HairCoaction</b></span>
     </div>
-   <ul class="nav-links">
-      <li><a class="nav-links "href="../features/meet.html">Meetings</a></li>
-      <li><a class="nav-links" href="../calender/calendar.html">Calendar</a></li>
-      <li><a class="nav-links" href="../features/fileupload.html">Files</a></li>
-      <li><a class="nav-links" href="../attendence/attendence.html">Attendence</a></li>
-      <li><a class="nav-links" href="../features/chat.html">Communication</a></li>
-      <li><button id="logoutBtn">Logout</button>
-      </li>
+    <ul class="nav-links">
+      <li><a href="../features/meet.html">Meetings</a></li>
+      <li><a href="../calender/calendar.html">Calendar</a></li>
+      <li><a href="../features/fileupload.html">Files</a></li>
+      <li><a href="../attendence/attendence.html">Attendance</a></li>
+      <li><a href="../features/chat.html">Communication</a></li>
+      <li><button id="logoutBtn">Logout</button></li>
     </ul>
   </div>
 
@@ -183,7 +183,7 @@
     <h2>Intern Progress Dashboard</h2>
     <p id="greeting">Welcome, Intern!</p>
     <p id="info">Loading progress...</p>
-    
+
     <h3>Your Assigned Tasks</h3>
     <table>
       <thead>
@@ -199,18 +199,26 @@
 
   <script>
     const token = localStorage.getItem("token");
-    const user = JSON.parse(atob(token.split('.')[1]));
-    const userName = localStorage.getItem("userName") || "Intern";
+    const storedName = localStorage.getItem("userName");
 
-    document.getElementById('greeting').innerText = `Welcome, ${userName}!`
+    // Redirect to login if no token
+    if (!token) {
+      window.location.href = "../auth/login.html";
+    }
+
+    // Decode JWT to check payload if needed
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const userName = storedName || payload.name || "Intern";
+
+    // Greet user
+    document.getElementById('greeting').innerText = `Welcome, ${userName}!`;
 
     async function loadProgress() {
       try {
-        const res = await fetch(`http://localhost:5000/api/hr/interns/progress/${user.email}`, {
-          headers: {
-            Authorization: "Bearer " + token
-          }
+        const res = await fetch(`http://localhost:5000/api/tasks/progress`, {
+          headers: { Authorization: "Bearer " + token }
         });
+        if (!res.ok) throw new Error();
         const data = await res.json();
         document.getElementById("info").innerText = `Your current progress: ${data.progress}%`;
       } catch (err) {
@@ -220,9 +228,10 @@
 
     async function loadTasks() {
       try {
-        const res = await fetch("http://localhost:5000/api/tasks", {
+        const res = await fetch("http://localhost:5000/api/tasks/mytasks", {
           headers: { Authorization: "Bearer " + token }
         });
+        if (!res.ok) throw new Error();
         const tasks = await res.json();
         const taskTable = document.getElementById("taskTable");
         taskTable.innerHTML = "";
@@ -239,15 +248,17 @@
       }
     }
 
+    // Load data
     loadProgress();
     loadTasks();
 
+    // Logout logic
     document.getElementById("logoutBtn").addEventListener("click", () => {
-      localStorage.clear(); // Clear session
-      window.location.href = "../auth/login.html"; // Redirect to login
+      localStorage.clear();
+      window.location.href = "../auth/login.html";
     });
 
-    // Prevent navigating back to dashboard using back button
+    // Prevent navigating back to dashboard after logout
     window.history.pushState(null, "", window.location.href);
     window.onpopstate = function () {
       window.history.pushState(null, "", window.location.href);
