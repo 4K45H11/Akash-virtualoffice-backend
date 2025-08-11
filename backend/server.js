@@ -9,6 +9,10 @@ const authRoutes = require('./routes/auth.router');
 const hrRoutes = require('./routes/hr.router');
 const taskRoutes = require('./routes/task.route');
 const initChat = require('./controllers/chat.controller');
+const teamLeadRoutes = require('./routes/teamlead.route');
+const chatRoutes = require('./routes/chat.route')
+const internRoutes = require('./routes/intern.route')
+
 
 const app = express();
 const server = http.createServer(app);
@@ -26,6 +30,9 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/hr', hrRoutes);
 app.use('/api/tasks', taskRoutes);
+app.use('/api/teamlead', teamLeadRoutes);
+app.use('/api/chat', chatRoutes)
+app.use('/api/intern', internRoutes)
 
 // Initialize Chat Socket
 initChat(io);

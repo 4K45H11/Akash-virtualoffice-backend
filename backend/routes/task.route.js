@@ -7,16 +7,22 @@ const { verifyToken } = require('../middleware/auth.middle');
 // team lead
 router.post('/', verifyToken, async (req, res) => {
   try {
-    if (req.user.role !== 'TeamLead') return res.status(403).json({ msg: 'Only TeamLead can assign tasks' });
+    if (req.user.role !== 'TeamLead') {
+      return res.status(403).json({ msg: 'Only TeamLead can assign tasks' });
+    }
 
     const { title, description, assignedTo } = req.body;
-    if (!title || !assignedTo) return res.status(400).json({ msg: 'Missing title or assignedTo' });
+    if (!title || !assignedTo) {
+      return res.status(400).json({ msg: 'Missing title or assignedTo' });
+    }
+
+    const assignedBy = req.user.email || 'unknown@system';
 
     const task = new Task({
       title,
       description,
       assignedTo,
-      assignedBy: req.user.email
+      assignedBy
     });
 
     await task.save();
@@ -25,6 +31,7 @@ router.post('/', verifyToken, async (req, res) => {
     return res.status(500).json({ msg: err.message });
   }
 });
+
 
 // Get tasks
 // - Intern: only their tasks

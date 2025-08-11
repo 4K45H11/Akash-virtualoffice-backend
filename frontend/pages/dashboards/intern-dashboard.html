@@ -228,7 +228,7 @@
 
     async function loadTasks() {
       try {
-        const res = await fetch("http://localhost:5000/api/tasks/mytasks", {
+        const res = await fetch("http://localhost:5000/api/intern/tasks", {
           headers: { Authorization: "Bearer " + token }
         });
         if (!res.ok) throw new Error();
@@ -237,14 +237,38 @@
         taskTable.innerHTML = "";
         tasks.forEach(t => {
           taskTable.innerHTML += `
-            <tr>
-              <td data-label="Title">${t.title}</td>
-              <td data-label="Description">${t.description}</td>
-              <td data-label="Status">${t.status}</td>
-            </tr>`;
+        <tr>
+          <td data-label="Title">${t.title}</td>
+          <td data-label="Description">${t.description}</td>
+          <td data-label="Status">
+            <select onchange="updateStatus('${t._id}', this.value)">
+              <option value="Pending" ${t.status === "Pending" ? "selected" : ""}>Pending</option>
+              <option value="In Progress" ${t.status === "In Progress" ? "selected" : ""}>In Progress</option>
+              <option value="Completed" ${t.status === "Completed" ? "selected" : ""}>Completed</option>
+            </select>
+          </td>
+        </tr>`;
         });
       } catch (err) {
         document.getElementById("taskTable").innerHTML = `<tr><td colspan="3">Unable to load tasks</td></tr>`;
+      }
+    }
+
+    async function updateStatus(taskId, status) {
+      try {
+        const res = await fetch(`http://localhost:5000/api/intern/tasks/${taskId}/status`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          },
+          body: JSON.stringify({ status })
+        });
+        if (!res.ok) throw new Error();
+        const updatedTask = await res.json();
+        console.log("Task updated:", updatedTask);
+      } catch (err) {
+        alert("Failed to update status");
       }
     }
 
