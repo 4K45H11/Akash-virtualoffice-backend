@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Task Time Tracker</title>
+  <style>
+    body{font-family:Arial;background:#f4f8fb;padding:30px}
+    .card{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    input, button{padding:10px;margin:8px 0}
+    .btn{background:#0288d1;color:#fff;border:none;border-radius:6px;cursor:pointer;padding:10px 14px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Task Time Tracker</h2>
+
+    <label>Task ID</label>
+    <input id="taskId" placeholder="Enter task id (e.g. 64abc...)" />
+
+    <div style="margin-top:12px;">
+      <button id="startBtn" class="btn">Start Timer</button>
+      <button id="stopBtn" class="btn" disabled>Stop Timer</button>
+    </div>
+
+    <p id="message"></p>
+    <h3>Tracked Time (this task)</h3>
+    <div id="timeInfo">—</div>
+  </div>
+
+<script>
+const token = localStorage.getItem('token');
+if(!token){ alert('Please login'); window.location.href = 'auth/login.html'; }
+
+const startBtn = document.getElementById('startBtn');
+const stopBtn = document.getElementById('stopBtn');
+const taskIdInput = document.getElementById('taskId');
+const messageP = document.getElementById('message');
+const timeInfo = document.getElementById('timeInfo');
+
+let currentEntryId = null;
+let timerInterval = null;
+
+// start
+startBtn.addEventListener('click', async () => {
+  const taskId = taskIdInput.value.trim();
+  if(!taskId){ alert('Enter task id'); return; }
+  try {
+    const res = await fetch('http://localhost:5000/api/time/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ taskId })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.msg || 'Start failed');
+
+    currentEntryId = data._id;
+    messageP.innerText = 'Timer started at ' + new Date(data.startTime).toLocaleTimeString();
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+    startTimerLive();
+  } catch (err) {
+    messageP.innerText = 'Error: ' + err.message;
+  }
+});
+
+// stop
+stopBtn.addEventListener('click', async () => {
+  if(!currentEntryId){
+    messageP.innerText = 'No running timer found (will try by taskId)';
+  }
+  try {
+    const res = await fetch('http://localhost:5000/api/time/stop', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
+      body: JSON.stringify({ entryId: currentEntryId, taskId: taskIdInput.value.trim() })
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.msg || 'Stop failed');
+
+    messageP.innerText = `Stopped. Duration: ${data.durationSec} seconds.`;
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    currentEntryId = null;
+    stopTimerLive();
+    loadTaskTime(taskIdInput.value.trim());
+  } catch (err) {
+    messageP.innerText = 'Error: ' + err.message;
+  }
+});
+
+function startTimerLive(){
+  stopTimerLive();
+  timerInterval = setInterval(async () => {
+    // show elapsed from server for current entry if available, otherwise count locally
+    if(!currentEntryId) return;
+    try {
+      const res = await fetch(`http://localhost:5000/api/time/task/${taskIdInput.value.trim()}`, {
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      if(!res.ok) return;
+      const d = await res.json();
+      // d.totalSec is total recorded sec for that user+task (only finished entries)
+      timeInfo.innerText = `Total recorded: ${d.totalSec || 0} sec`;
+    } catch (err) {
+      // ignore
+    }
+  }, 3000);
+}
+
+function stopTimerLive(){ if(timerInterval){ clearInterval(timerInterval); timerInterval = null; } }
+
+async function loadTaskTime(taskId){
+  if(!taskId) return;
+  try {
+    const res = await fetch(`http://localhost:5000/api/time/task/${taskId}`, {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if(!res.ok) throw new Error('Failed');
+    const d = await res.json();
+    const total = d.totalSec || 0;
+    timeInfo.innerText = `Total recorded: ${total} sec\nEntries: ${d.entries.length}`;
+  } catch (err) {
+    timeInfo.innerText = 'Unable to load time';
+  }
+}
+</script>
+</body>
+</html>

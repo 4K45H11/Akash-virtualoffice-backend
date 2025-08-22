@@ -2,44 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Advanced Attendance System</title>
-  <link rel="stylesheet" href="./attendence.css" />
+  <title>Attendance Tracking - Virtual Office</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #0288d1;
+      color: white;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar h1 {
+      font-size: 20px;
+      margin: 0;
+    }
+    .navbar button {
+      background: #0277bd;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .navbar button:hover {
+      background: #01579b;
+    }
+
+    /* Card */
+    .card {
+      max-width: 750px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      border-top: 6px solid #0288d1;
+    }
+
+    h2 {
+      color: #0288d1;
+      margin-top: 0;
+    }
+
+    /* Buttons */
+    #mark-section {
+      margin-bottom: 20px;
+    }
+    #mark-section button {
+      padding: 12px 18px;
+      margin-right: 10px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    #mark-section button:first-child {
+      background: #43a047; /* green for present */
+    }
+    #mark-section button:first-child:hover {
+      background: #2e7d32;
+    }
+    #mark-section button:last-child {
+      background: #e53935; /* red for absent */
+    }
+    #mark-section button:last-child:hover {
+      background: #b71c1c;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      background: #f9fbfd;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      border: 1px solid #e3f2fd;
+      text-align: center;
+    }
+    th {
+      background: #0288d1;
+      color: white;
+      font-weight: normal;
+    }
+    tr:nth-child(even) {
+      background: #f1f8ff;
+    }
+    td.present {
+      color: #2e7d32;
+      font-weight: bold;
+    }
+    td.absent {
+      color: #c62828;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-  <nav class="navbar">
-    <h1>Virtual Office</h1>
-    <ul>
-      <li><a href="../dashboards/dashboard.html">Go back</a></li>
-    </ul>
-  </nav>
-  <div class="container">
-    <h1>Attendance Tracker</h1>
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Virtual Office - Attendance</h1>
+    <button onclick="window.history.back()">← Back</button>
+  </div>
 
-    <div class="form-section">
-      <input type="text" id="nameInput" placeholder="Full Name" />
-      <input type="email" id="emailInput" placeholder="Email ID" />
-      <input type="email" id="departmentInput" placeholder="Department ID" />
-      <button id="checkInBtn">Check In</button>
-      <button id="checkOutBtn">Check Out</button>
-      <button id="onLeaveBtn">On Leave</button>
+  <div class="card">
+    <h2>Mark Attendance</h2>
+    <div id="mark-section">
+      <button onclick="markAttendance('present')">✅ Present</button>
+      <button onclick="markAttendance('absent')">❌ Absent</button>
     </div>
 
-    <h2>Attendance Log for <span id="currentDate"></span></h2>
+    <h2>My Attendance History</h2>
     <table>
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Department</th>
+          <th>Date</th>
           <th>Status</th>
-          <th>Check-In Time</th>
-          <th>Check-Out Time</th>
-          <th>Total Time</th>
         </tr>
       </thead>
-      <tbody id="attendanceTable"></tbody>
+      <tbody id="attendance-list"></tbody>
     </table>
   </div>
 
-  <script src="attendance.js"></script>
+  <script src="attendence.js"></script>
 </body>
 </html>

@@ -12,6 +12,9 @@ const initChat = require('./controllers/chat.controller');
 const teamLeadRoutes = require('./routes/teamlead.route');
 const chatRoutes = require('./routes/chat.route')
 const internRoutes = require('./routes/intern.route')
+const fileRoutes = require('./routes/file.route')
+const timeRoutes = require('./routes/time.route')
+const attendanceRoutes = require("./routes/attendence.route");
 
 
 const app = express();
@@ -33,6 +36,13 @@ app.use('/api/tasks', taskRoutes);
 app.use('/api/teamlead', teamLeadRoutes);
 app.use('/api/chat', chatRoutes)
 app.use('/api/intern', internRoutes)
+app.use('/api/files',fileRoutes)
+app.use('/api/time',timeRoutes)
+app.use("/api/attendance", attendanceRoutes);
+
+
+const path = require('path');
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Initialize Chat Socket
 initChat(io);
