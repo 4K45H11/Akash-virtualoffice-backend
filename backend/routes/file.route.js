@@ -59,7 +59,7 @@ router.get('/', verifyToken, async (req, res) => {
 });
 
 // Download by id
-router.get('/:id/download', verifyToken, async (req, res) => {
+router.get('/:id/download', async (req, res) => {
   try {
     const file = await File.findById(req.params.id);
     if (!file) return res.status(404).json({ msg: 'File not found' });

@@ -105,3 +105,39 @@ th {
   color: #333;
   font-weight: 600;
 }
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background: #f8f9fa;
+}
+
+h1 {
+  color: #333;
+}
+
+.filters {
+  margin-bottom: 15px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+thead {
+  background: #007bff;
+  color: white;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+tbody tr:nth-child(even) {
+  background: #f2f2f2;
+}

@@ -43,7 +43,7 @@ router.get("/me", verifyToken, async (req, res) => {
 });
 
 // ✅ HR/Founder → view all attendance
-router.get("/all", verifyToken, restrictTo("HR", "Founder"), async (req, res) => {
+router.get("/all", verifyToken, restrictTo("HR", "Founder","TeamLead"), async (req, res) => {
   try {
     const records = await Attendance.find().sort({ date: -1 });
     res.json(records);

@@ -3,18 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <title>All Attendance Records</title>
-  <link rel="stylesheet" href="attendance.css" />
+  <link rel="stylesheet" href="attendence.css" />
 </head>
 <body>
-  <h1>All Users' Attendance (HR/Founder)</h1>
+  <h1>All Employes's Attendance</h1>
 
-  <table border="1" id="attendanceTable">
+  <!-- Filters -->
+  <div class="filters">
+    <label>
+      Status:
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="present">Present</option>
+        <option value="absent">Absent</option>
+      </select>
+    </label>
+    <label>
+      From:
+      <input type="date" id="fromDate" />
+    </label>
+    <label>
+      To:
+      <input type="date" id="toDate" />
+    </label>
+    <button id="applyFilter">Apply</button>
+  </div>
+
+  <!-- Attendance Table -->
+  <table id="attendanceTable">
     <thead>
       <tr>
-        <th>User</th>
         <th>Email</th>
-        <th>Role</th>
-        <th>Date & Time</th>
+        <th>Status</th>
+        <th>Date</th>
       </tr>
     </thead>
     <tbody></tbody>
